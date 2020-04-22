@@ -32,9 +32,11 @@ function Toss(){
  	if (( $randomCheck == 0 ))
  	then
 	echo "Player has won the toss"
+	playerTurn
  	else
  	echo "Computer has won the toss"
  	fi
+
 }
 
 function boardShow(){
@@ -56,14 +58,84 @@ function boardShow(){
  	done
  	printf "\n"
 }
+function checkVertical(){
+	playerinput=$1
+	for ((row=0; row < $ROWNUMBER; row++))
+	do
+	for ((column=0; column < $COLUMNNUMBER; column++))
+	do
+	if [[ ${board[$row,$column]}${board[$(($row+1)),$column]}${board[$(($row+2)),$column]} == $playerinput$playerinput$playerinput ]]
+	then
+	flag=true
+	echo "$flag"
+	return
+	fi
+	done
+	done
+}
+
+function checkHorizontal(){
+	playerinput=$1
+	for ((row=0; row<3; row++))
+	do
+	for ((column=0; column<3; column++))
+	do
+	if [[ ${board[$row,$column]}${board[$row,$(($column+1))]}${board[$row,$(($column+2))]} == $playerinput$playerinput$playerinput ]]
+	then
+	flag=true
+	echo "$flag"
+	return
+	fi
+	done
+	done
+}
+
+function checkDiagonal(){
+	playerinput=$1
+	row=0
+	column=0
+	diagonal1=${board[$row,$column]}${board[$(($row+1)),$(($column+1))]}${board[$(($row+2)),$(($column+2))]}
+	diagonal2=${board[$row,$(($column+2))]}${board[$(($row+1)),$(($column+1))]}${board[$(($row+2)),$column]}
+	if [[ $diagonal1 == $playerinput$playerinput$playerinput || $diagonal2 == $playerinput$playerinput$playerinput ]]
+	then
+	flag=true
+	echo "$flag"
+	return
+	fi
+}
+
+function playerTurn(){
+	count=1
+ 	read -p "Player turn, Enter player position :" position
+ 	for (( i=0; i<$ROWNUMBER; i++ ))
+ 	do
+ 	for (( j=0; j<$COLUMNNUMBER; j++))
+ 	do
+ 	if [[ $count == $position ]]
+ 	then
+ 	if [[ ${board[$i,$j]} == " " ]]
+ 	then
+ 	board[$i,$j]=$player
+ 	else
+ 	printf "\nInvalid move,Enter again\n"
+ 	playerTurn
+ 	fi
+ 	fi
+ 	((count++))
+ 	done
+ 	done
+		((playCount++))
+ 	boardShow
+ 	if [[ $(checkWin $player) == true ]]
+ 	then
+ 	printf "player won"
+ 	exit
+ 	fi
+}
 
 reset
 assignLetter
 Toss
 board
 boardShow
-
-
-
-
 
