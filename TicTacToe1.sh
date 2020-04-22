@@ -4,18 +4,18 @@ ROWNUMBER=3
 COLUMNNUMBER=3
 TOTALCOUNT=9
 
-function reset() {
- 	for (( row=0; row < $ROWNUMBER; row++ ))
- 	do
- 	for (( col=0; col < $COLUMNNUMBER; col++ ))
- 	do
- 	board[$row,$col]=" "
- 	done
- 	done
-}
-
 randomCheck=$((RANDOM%2))
-	function assignLetter() {
+
+function reset() {
+        for (( row=0; row < $ROWNUMBER; row++ ))
+        do
+        for (( col=0; col < $COLUMNNUMBER; col++ ))
+        do
+        board[$row,$col]=" "
+        done
+        done
+}
+function assignLetter() {
 	if (( $randomCheck == 0 ))
  	then
  		player="X"
@@ -28,3 +28,22 @@ randomCheck=$((RANDOM%2))
  	echo "Computer has been assigned $computer"
 
 }
+function Toss(){
+ 	if (( $randomCheck == 0 ))
+ 	then
+	echo "Player has won the toss"
+ 	else
+ 	echo "Computer has won the toss"
+ 	fi
+}
+reset
+assignLetter
+Toss
+
+
+
+
+
+
+
+
