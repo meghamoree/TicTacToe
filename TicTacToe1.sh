@@ -36,12 +36,32 @@ function Toss(){
  	echo "Computer has won the toss"
  	fi
 }
+
+function boardShow(){
+	 for (( row=0; row < $ROWNUMBER; row++ ))
+	 do
+ 	 for (( col=0; col < $COLUMNNUMBER; col++ ))
+ 	 do
+	 if (( col < 2 ))
+ 	 then
+ 	printf "${board[$row,$col]} | "
+ 	else
+ 	printf "${board[$row,$col]}"
+ 	fi
+ 	done
+ 	if (( row < 2 ))
+	then
+ 	printf "\n----------\n"
+ 	fi
+ 	done
+ 	printf "\n"
+}
+
 reset
 assignLetter
 Toss
-
-
-
+board
+boardShow
 
 
 
