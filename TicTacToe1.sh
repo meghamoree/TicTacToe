@@ -345,6 +345,15 @@ function checkCornerCondition(){
 	flag2="true"
 	fi
 }
+
+function checkCenter(){
+	if [[ ${board[1,1]} == " " ]]
+	then
+	board[1,1]="$computer"
+	flag3="true"
+	fi
+}
+
 function checkWin(){
  playerinput=$1
  flag=false
@@ -412,6 +421,9 @@ computerBlockLogic $player
 checkCornerCondition
 	if [[ $flag2 == flase ]]
 	then
+checkCenter
+	if [[ $flag3 == false ]]
+	then
 for (( i=0; i<$ROWNUMBER; i++ ))
 do
 for (( j=0; j<$COLUMNNUMBER; j++ ))
@@ -425,11 +437,11 @@ for (( j=0; j<$COLUMNNUMBER; j++ ))
  printf "\nInvalid position by computer\n"
  computerTurn
  fi
-	fi
-
+ fi
 ((count++))
  done
  done
+fi
 fi
 fi
 fi
