@@ -362,6 +362,26 @@ function checkWin(){
 	checkDiagonal $playerinput
 }
 
+function checkSides(){
+	if [[ ${board[0,1]} == " " ]]
+	then
+	board[0,1]=$computer
+	flag4="true"
+	elif [[ ${board[1,0]} == " " ]]
+	then
+	board[1,0]=$computer
+	flag4="true"
+	elif [[ ${board[1,2]} == " " ]]
+	then
+	board[1,2]=$computer
+	flag4="true"
+	elif [[ ${board[2,1]} == " " ]]
+	then
+	board[2,1]=$computer
+	flag4="true"
+	fi
+}
+
 function tieCheck(){
 	playCount=$1
 	if [[ $playCount == $TOTALCOUNT ]]
@@ -424,6 +444,8 @@ checkCornerCondition
 checkCenter
 	if [[ $flag3 == false ]]
 	then
+	if [[ $flag4 == false ]]
+	then
 for (( i=0; i<$ROWNUMBER; i++ ))
 do
 for (( j=0; j<$COLUMNNUMBER; j++ ))
@@ -441,6 +463,7 @@ for (( j=0; j<$COLUMNNUMBER; j++ ))
 ((count++))
  done
  done
+fi
 fi
 fi
 fi
