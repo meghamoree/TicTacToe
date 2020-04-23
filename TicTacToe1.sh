@@ -4,7 +4,11 @@ ROWNUMBER=3
 COLUMNNUMBER=3
 TOTALCOUNT=9
 
+#variables
 randomCheck=$((RANDOM%2))
+playcount=0
+
+declare -A board
 
 function reset() {
         for (( row=0; row < $ROWNUMBER; row++ ))
@@ -35,6 +39,7 @@ function Toss(){
 	playerTurn
  	else
  	echo "Computer has won the toss"
+	computerTurn
  	fi
 
 }
@@ -48,7 +53,7 @@ function boardShow(){
  	 then
  	printf "${board[$row,$col]} | "
  	else
- 	printf "${board[$row,$col]}"
+ 	printf "${board[$0row,$col]}"
  	fi
  	done
  	if (( row < 2 ))
@@ -104,6 +109,23 @@ function checkDiagonal(){
 	fi
 }
 
+function checkWin(){
+ playerinput=$1
+ flag=false
+	checkVertical $playerinput
+	checkHorizontal $playerinput
+	checkDiagonal $playerinput
+}
+
+function tieCheck(){
+	playCount=$1
+	if [[ $playCount == $TOTALCOUNT ]]
+	then
+	echo	"Match tie"
+	exit
+	fi
+}
+
 function playerTurn(){
 	count=1
  	read -p "Player turn, Enter player position :" position
@@ -131,11 +153,49 @@ function playerTurn(){
  	printf "player won"
  	exit
  	fi
+computerTurn
 }
+function computerTurn(){
+flag="false"
+
+ count=1
+tieCheck $playCount
+ printf "\nComputer turn\n"
+
+for (( i=0; i<$ROWNUMBER; i++ ))
+do
+for (( j=0; j<$COLUMNNUMBER; j++ ))
+ do
+ if [[ $count == $position ]]
+ then
+ if [[ ${board[$i,$j]} == " " ]]
+ then
+ board[$i,$j]=$computer
+ else
+ printf "\nInvalid position by computer\n"
+ computerTurn
+ fi
+	fi
+
+((count++))
+ done
+ done
+ ((playCount++))
+
+boardShow
+ if [[ $(checkWin $computer) == true ]]
+ then
+ printf "computer won"
+ exit
+ fi
+ playerTurn
+}
+
 
 reset
 assignLetter
 Toss
 board
 boardShow
+
 
