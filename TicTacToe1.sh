@@ -109,6 +109,113 @@ function checkDiagonal(){
 	fi
 }
 
+function computerBlockLogic(){
+	player=$1
+ for (( i=0; i<$ROWNUMBER; i++ ))
+ do
+ if [[ ${board[$i,0]}${board[$i,1]} == $player$player ]]
+ then
+ if [[ ${board[$i,2]} == " " ]]
+ then
+ board[$i,2]="$computer"
+ flag1="true"
+	break
+ fi
+ elif [[ ${board[$i,1]}${board[$i,2]} == $player$player ]]
+	then
+	if [[ ${board[$i,0]} == " " ]]
+	then
+	board[$i,0]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[$i,2]}${board[$i,0]} == $player$player ]]
+	then
+	if [[ ${board[$i,0]} == " " ]]
+	then
+	board[$i,0]="$computer"
+	flag1="true"
+	break
+	fi
+	fi
+	done
+	for (( i=0; i<$COLUMNNUMBER; i++ ))
+	do
+	if [[ ${board[0,$i]}${board[1,$i]} == $player$player ]]
+	then
+	if [[ ${board[2,$i]} == " " ]]
+	then
+	board[2,$i]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[1,$i]}${board[2,$i]} == $player$player ]]
+	then
+	if [[ ${board[0,$i]} == " " ]]
+	then
+	board[0,$i]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[2,$i]}${board[0,$i]} == $player$player ]]
+	then
+	if [[ ${board[1,$i]} == " " ]]
+	then
+	board[1,$i]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[0,0]}${board[1,1]} == $player$player ]]
+	then
+	if [[ ${board[2,2]} == " " ]]
+	then
+	board[2,2]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[1,1]}${board[2,2]} == $player$player ]]
+	then
+	if [[ ${board[0,0]} == " " ]]
+	then
+	board[0,0]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[2,2]}${board[0,0]} == $player$player ]]
+	then
+	if [[ ${board[1,1]} == " " ]]
+	then
+	board[1,1]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[0,2]}${board[1,1]} == $player$player ]]
+	then
+	if	[[ ${board[2,0]} == " " ]]
+	then
+	board[2,0]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[1,1]}${board[2,0]} == $player$player ]]
+	then
+	if	[[ ${board[0,2]} == " " ]]
+	then
+	board[0,2]="$computer"
+	flag1="true"
+	break
+	fi
+	elif [[ ${board[2,0]}${board[0,2]} == $player$player ]]
+	then
+	if [[ $board[1,1]} == " " ]]
+	then
+	board[1,1]="$computer"
+	flag1="true"
+	break
+	fi
+	fi
+	done
+}
 
 function computerWinLogic(){
 	computer=$1
@@ -268,6 +375,7 @@ computerTurn
 
 function computerTurn(){
 flag="false"
+flag="false"
 
  count=1
 tieCheck $playCount
@@ -279,6 +387,9 @@ computerWinLogic $computer
 	printf "\ncomputer won"
 	exit
 	else
+computerBlockLogic $player
+	if [[ $flag1 == flase ]]
+	then
 for (( i=0; i<$ROWNUMBER; i++ ))
 do
 for (( j=0; j<$COLUMNNUMBER; j++ ))
@@ -297,6 +408,7 @@ for (( j=0; j<$COLUMNNUMBER; j++ ))
 ((count++))
  done
  done
+fi
 fi
  ((playCount++))
 
