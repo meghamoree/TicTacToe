@@ -326,6 +326,25 @@ function computerWinLogic(){
 
 }
 
+function checkCornerCondition(){
+	if [[ ${board[0,0]} == " " ]]
+	then
+	board[0,0]="$computer"
+	flag2="true"
+	elif [[ ${board[0,2]} == " " ]]
+	then
+	board[0,2]="$computer"
+	flag2="true"
+	elif	[[ ${board[2,0]} == " " ]]
+	then
+	board[2,0]="$computer"
+	flag2="true"
+	elif	[[ ${board[2,2]} == " " ]]
+	then
+	board[2,2]="$computer"
+	flag2="true"
+	fi
+}
 function checkWin(){
  playerinput=$1
  flag=false
@@ -390,6 +409,9 @@ computerWinLogic $computer
 computerBlockLogic $player
 	if [[ $flag1 == flase ]]
 	then
+checkCornerCondition
+	if [[ $flag2 == flase ]]
+	then
 for (( i=0; i<$ROWNUMBER; i++ ))
 do
 for (( j=0; j<$COLUMNNUMBER; j++ ))
@@ -408,6 +430,7 @@ for (( j=0; j<$COLUMNNUMBER; j++ ))
 ((count++))
  done
  done
+fi
 fi
 fi
  ((playCount++))
